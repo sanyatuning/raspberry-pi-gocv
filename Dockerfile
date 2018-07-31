@@ -11,7 +11,7 @@ RUN apt-get -y install unzip build-essential cmake git libgtk2.0-dev pkg-config 
 
 RUN go get -u -d gocv.io/x/gocv
 WORKDIR /go/src/gocv.io/x/gocv
-RUN make download
+RUN make download &>/dev/null
 
 # RUN make build
 WORKDIR ${TMP_DIR}opencv/opencv-${OPENCV_VERSION}/build
@@ -28,7 +28,7 @@ RUN cmake \
         -D BUILD_opencv_python3=OFF \
         -D WITH_OPENCL=ON \
         -D WITH_JASPER=OFF ..
-RUN make -j 4
+RUN make -j 4 -s
 RUN make preinstall
 WORKDIR /go/src/gocv.io/x/gocv
 
